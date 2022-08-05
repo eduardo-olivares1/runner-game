@@ -1,0 +1,16 @@
+name: Docker Image Test
+
+on: [ pull_request ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker testing image
+      run: docker image build -t flask-test-app --target test .
+    - name: Run tests with docker conatiner
+      run: docker container run --rm flask-test-app
