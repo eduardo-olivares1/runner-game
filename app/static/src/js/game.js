@@ -6,7 +6,7 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 250 }
+            gravity: { y: 800 }
         }
     },
     scene: {
@@ -42,7 +42,7 @@ function create() {
 
     platforms.create(600, 400, 'ground');
     platforms.create(50, 250, 'ground');
-    platforms.create(750, 220, 'ground');
+    platforms.create(650, 220, 'ground');
 
     player = this.physics.add.sprite(100, 450, 'player');
 
@@ -71,22 +71,22 @@ function create() {
 
     cursors = this.input.keyboard.createCursorKeys();
 
-    stars = this.physics.add.group({
+    collectibles = this.physics.add.group({
         key: 'collectible',
         repeat: 11,
         setXY: { x: 12, y: 0, stepX: 70 }
     });
 
-    stars.children.iterate(function (child) {
+    collectibles.children.iterate(function (child) {
 
         child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
 
     });
 
     this.physics.add.collider(player, platforms);
-    this.physics.add.collider(stars, platforms);
+    this.physics.add.collider(collectibles, platforms);
 
-    this.physics.add.overlap(player, stars, collectStar, null, this);
+    this.physics.add.overlap(player, collectibles, collect, null, this);
 }
 
 function update() {
@@ -107,10 +107,10 @@ function update() {
     }
 
     if (cursors.up.isDown && player.body.touching.down) {
-        player.setVelocityY(-330);
+        player.setVelocityY(-515);
     }
 }
 
-function collectStar(player, collectible) {
+function collect(player, collectible) {
     collectible.disableBody(true, true);
 }
