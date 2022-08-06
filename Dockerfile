@@ -28,7 +28,8 @@ RUN apt update && apt -y upgrade
 RUN chmod 755 ./tests/bin/test_with_server.sh
 CMD ./tests/bin/test_with_server.sh
 
-
 FROM base as development
-RUN apt update && apt -y upgrade
 CMD flask run --host=0.0.0.0 --port=5000
+
+FROM base as pre-production
+CMD gunicorn --bind 0.0.0.0:5000 wsgi:app
