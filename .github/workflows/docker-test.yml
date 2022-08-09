@@ -11,6 +11,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker testing image
+      working-directory: ./flask-app
       run: docker image build -t flask-test-app --target test .
     - name: Run tests with docker conatiner
+      working-directory: ./flask-app
       run: docker container run --rm flask-test-app
