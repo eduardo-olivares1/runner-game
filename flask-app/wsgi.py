@@ -2,7 +2,6 @@ import os
 import sys
 import click
 from app import create_app
-from app.models import ExampleModel
 
 app = create_app(os.getenv("FLASK_CONFIG") or "default")
 COV = None
