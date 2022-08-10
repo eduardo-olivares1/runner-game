@@ -1,5 +1,5 @@
 import unittest
-from app import create_app, db
+from app import create_app
 
 
 class FlaskClientTestCase(unittest.TestCase):
@@ -10,10 +10,7 @@ class FlaskClientTestCase(unittest.TestCase):
         self.app = create_app("testing")
         self.app_context = self.app.app_context()
         self.app_context.push()
-        db.create_all()
 
     @classmethod
     def tearDownClass(self):
-        db.session.remove()
-        db.drop_all()
         self.app_context.pop()

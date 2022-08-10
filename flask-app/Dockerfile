@@ -4,7 +4,7 @@ COPY . /var/www
 
 WORKDIR /var/www
 
-RUN pip install -r requirements.txt && apt update && apt -y upgrade
+RUN pip install --upgrade pip && pip install -r requirements.txt && apt update && apt -y upgrade
 
 EXPOSE 5000
 
@@ -23,12 +23,18 @@ RUN unzip ./tests/bin/chromedriver_linux64.zip -d $HOME/bin
 # Resolve any dependency issues
 RUN apt update && apt -y upgrade
 
-# Run script that starts dev server in background, runs tests, and then kills the server
-# TODO: find a more gracefull way to do this, but this works for now.
 RUN chmod 755 ./tests/bin/test_with_server.sh
+ENV FLASK_CONFIG=testing
 CMD ./tests/bin/test_with_server.sh
 
-
 FROM base as development
-RUN apt update && apt -y upgrade
+ENV FLASK_CONFIG=development
 CMD flask run --host=0.0.0.0 --port=5000
+
+FROM base as preproduction
+ENV FLASK_CONFIG=preproduction
+CMD gunicorn --bind 0.0.0.0:5000 wsgi:app
+
+FROM base as production
+ENV FLASK_CONFIG=production
+CMD gunicorn --bind 0.0.0.0:5000 wsgi:app

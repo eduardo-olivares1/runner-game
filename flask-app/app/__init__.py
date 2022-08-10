@@ -1,13 +1,6 @@
 from flask import Flask
 from config import config
-from flask_sqlalchemy import SQLAlchemy
 import logging
-
-# from flask_migrate import Migrate
-
-
-db = SQLAlchemy()
-# migrate = Migrate()
 
 
 def create_app(config_name):
@@ -20,10 +13,6 @@ def create_app(config_name):
     if config_name == "testing":
         werkzeug_log = logging.getLogger("werkzeug")
         werkzeug_log.disabled = True
-
-    # Plug-in inits
-    db.init_app(app)
-    # migrate.init_app(app, db)
 
     # import blueprints
     from .main import main as main_blueprint

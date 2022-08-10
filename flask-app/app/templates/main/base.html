@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask App | {% block title %} {% endblock %}</title>
+    <title>Voz Games| {% block title %} {% endblock %}</title>
+    <script src="{{ url_for('static', filename='vendor/phaser.min.js')}}"></script>
 </head>
 
 <body>
     <nav>
         <ul>
-            <li><a href="{{ url_for('main.home') }}">Home</a></li>
-            <li><a href="{{ url_for('main.example_form') }}">WTF Forms Example</a></li>
+            <li><a href="{{ url_for('main.home') }}">Voz Games</a></li>
         </ul>
     </nav>
     {% for message in get_flashed_messages() %}
@@ -27,6 +27,7 @@
     <footer>
         © Copyright Your Entity
     </footer>
+    <script src="{{ url_for('static', filename='src/js/game.js')}}"></script>
 </body>
 
 </html>
