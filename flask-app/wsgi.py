@@ -12,6 +12,7 @@ if os.environ.get("FLASK_COVERAGE"):
     COV = coverage.coverage(branch=True, include="app/*")
     COV.start()
 
+
 @app.cli.command()
 @click.option(
     "--coverage/--no-coverage", default=False, help="Run tests under code coverage."
