@@ -31,6 +31,10 @@ FROM base as development
 ENV FLASK_CONFIG=development
 CMD flask run --host=0.0.0.0 --port=5000
 
-FROM base as pre-production
+FROM base as preproduction
 ENV FLASK_CONFIG=preproduction
+CMD gunicorn --bind 0.0.0.0:5000 wsgi:app
+
+FROM base as production
+ENV FLASK_CONFIG=production
 CMD gunicorn --bind 0.0.0.0:5000 wsgi:app
