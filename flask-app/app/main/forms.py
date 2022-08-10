@@ -2,7 +2,6 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, SubmitField, EmailField
 from wtforms.validators import InputRequired, EqualTo, Email
 from sqlalchemy.exc import OperationalError
-from ..models import ExampleModel
 
 
 class ExampleForm(FlaskForm):
