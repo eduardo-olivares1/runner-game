@@ -1,7 +1,7 @@
 import os
 import sys
 import click
-from app import create_app, db
+from app import create_app
 from app.models import ExampleModel
 
 app = create_app(os.getenv("FLASK_CONFIG") or "default")
@@ -11,12 +11,6 @@ if os.environ.get("FLASK_COVERAGE"):
 
     COV = coverage.coverage(branch=True, include="app/*")
     COV.start()
-
-
-@app.shell_context_processor
-def make_shell_context():
-    return dict(db=db, ExampleModel=ExampleModel)
-
 
 @app.cli.command()
 @click.option(
