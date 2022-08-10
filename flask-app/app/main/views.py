@@ -1,4 +1,4 @@
-from flask import render_template, send_from_directory, current_app
+from flask import render_template
 from . import main
 
 
