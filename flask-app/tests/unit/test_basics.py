@@ -1,4 +1,3 @@
-import client_test
 from tests.client_test import FlaskClientTestCase
 from flask import current_app
 
