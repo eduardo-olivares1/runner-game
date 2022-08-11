@@ -14,7 +14,7 @@ class SeleniumTestCase(unittest.TestCase):
         options.add_argument("no-sandbox")
 
         try:
-            cls.browser = webdriver.Chrome(chrome_options=options)
+            cls.browser = webdriver.Chrome(options=options)
         except:
             pass
 
