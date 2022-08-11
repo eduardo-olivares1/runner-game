@@ -4,7 +4,9 @@ import click
 from app import create_app
 
 application = app = create_app(os.getenv("FLASK_CONFIG") or "default")
+
 COV = None
+
 if os.environ.get("FLASK_COVERAGE"):
     import coverage
 
