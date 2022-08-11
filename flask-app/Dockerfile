@@ -6,6 +6,8 @@ WORKDIR /var/www
 
 RUN pip install --upgrade pip && pip install -r requirements.txt && apt update && apt -y upgrade
 
+ENV FLASK_APP=application.py
+
 EXPOSE 5000
 
 FROM base as test
@@ -18,23 +20,27 @@ RUN wget --no-verbose -O /var/tmp/chrome.deb https://dl.google.com/linux/chrome/
 
 # Install included chromedriver (v103.0.5060.134) for selenium
 RUN apt install unzip
-RUN unzip ./tests/bin/chromedriver_linux64.zip -d $HOME/bin
+RUN unzip ./tests/bin/chromedriver_linux64.zip -d /usr/local/bin
 
 # Resolve any dependency issues
 RUN apt update && apt -y upgrade
 
 RUN chmod 755 ./tests/bin/test_with_server.sh
 ENV FLASK_CONFIG=testing
+ENV FLASK_APP=application.py
 CMD ./tests/bin/test_with_server.sh
 
 FROM base as development
 ENV FLASK_CONFIG=development
+ENV FLASK_APP=application.py
 CMD flask run --host=0.0.0.0 --port=5000
 
 FROM base as preproduction
 ENV FLASK_CONFIG=preproduction
+
 CMD gunicorn --bind 0.0.0.0:5000 application:application
 
 FROM base as production
 ENV FLASK_CONFIG=production
+ENV FLASK_APP=application.py
 CMD gunicorn --bind 0.0.0.0:5000 application:application
