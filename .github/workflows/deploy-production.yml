@@ -12,7 +12,7 @@ jobs:
         
       - name: Generate Deployment Package
         working-directory: ./flask-app 
-        run: zip -r deploy-production.zip *
+        run: zip -r deploy-production.zip * && mv deploy-production.zip ~/
         
       - name: Get timestamp
         uses: gerred/actions/current-time@master
