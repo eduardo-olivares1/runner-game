@@ -16,10 +16,13 @@ let config = {
     }
 };
 
+// Global Game Variables
 let player;
 let collectibles;
 let platforms;
 let cursors;
+let scoreText;
+let amountCollected = 0;
 
 let game = new Phaser.Game(config);
 
@@ -87,6 +90,8 @@ function create() {
     this.physics.add.collider(collectibles, platforms);
 
     this.physics.add.overlap(player, collectibles, collect, null, this);
+
+    scoreText = this.add.text(16, 16, 'Boba Collected: 0 / 12', { fontSize: '32px', fill: '#000' });
 }
 
 function update() {
@@ -113,4 +118,6 @@ function update() {
 
 function collect(player, collectible) {
     collectible.disableBody(true, true);
+    amountCollected += 1
+    scoreText.setText(`Boba Collected: ${amountCollected} / 12`)
 }
