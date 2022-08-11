@@ -16,10 +16,13 @@ let config = {
     }
 };
 
+// Global Game Variables
 let player;
 let collectibles;
 let platforms;
 let cursors;
+let scoreText;
+let amountCollected = 0;
 
 let game = new Phaser.Game(config);
 
@@ -37,15 +40,12 @@ function create() {
     this.add.image(400, 300, 'background');
 
     platforms = this.physics.add.staticGroup();
-
     platforms.create(400, 568, 'ground').setScale(2).refreshBody();
-
     platforms.create(600, 400, 'ground');
     platforms.create(50, 250, 'ground');
     platforms.create(650, 220, 'ground');
 
     player = this.physics.add.sprite(100, 450, 'player');
-
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
 
@@ -85,8 +85,9 @@ function create() {
 
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(collectibles, platforms);
-
     this.physics.add.overlap(player, collectibles, collect, null, this);
+
+    scoreText = this.add.text(16, 16, 'Boba Collected: 0 / 12', { fontFamily: 'Silkscreen', fontSize: '32px', fill: '#000' });
 }
 
 function update() {
@@ -113,4 +114,6 @@ function update() {
 
 function collect(player, collectible) {
     collectible.disableBody(true, true);
+    amountCollected += 1
+    scoreText.setText(`Boba Collected: ${amountCollected} / 12`)
 }
