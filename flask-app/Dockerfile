@@ -32,15 +32,12 @@ CMD ./tests/bin/test_with_server.sh
 
 FROM base as development
 ENV FLASK_CONFIG=development
-ENV FLASK_APP=application.py
 CMD flask run --host=0.0.0.0 --port=5000
 
 FROM base as preproduction
 ENV FLASK_CONFIG=preproduction
-
 CMD gunicorn --bind 0.0.0.0:5000 application:application
 
 FROM base as production
 ENV FLASK_CONFIG=production
-ENV FLASK_APP=application.py
 CMD gunicorn --bind 0.0.0.0:5000 application:application
