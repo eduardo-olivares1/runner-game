@@ -87,7 +87,7 @@ function create() {
     this.physics.add.collider(collectibles, platforms);
     this.physics.add.overlap(player, collectibles, collect, null, this);
 
-    scoreText = this.add.text(16, 16, 'Boba Collected: 0 / 12', { fontSize: '32px', fill: '#000' });
+    scoreText = this.add.text(16, 16, 'Boba Collected: 0 / 12', { fontFamily: 'Silkscreen', fontSize: '32px', fill: '#000' });
 }
 
 function update() {
