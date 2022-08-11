@@ -25,16 +25,20 @@ RUN apt update && apt -y upgrade
 
 RUN chmod 755 ./tests/bin/test_with_server.sh
 ENV FLASK_CONFIG=testing
+ENV FLASK_APP='app:create_app("testing")'
 CMD ./tests/bin/test_with_server.sh
 
 FROM base as development
 ENV FLASK_CONFIG=development
+ENV FLASK_APP='app:create_app("default")'
 CMD flask run --host=0.0.0.0 --port=5000
 
 FROM base as preproduction
 ENV FLASK_CONFIG=preproduction
+ENV FLASK_APP='app:create_app("preproduction")'
 CMD gunicorn --bind 0.0.0.0:5000 application:application
 
 FROM base as production
 ENV FLASK_CONFIG=production
+ENV FLASK_APP='app:create_app("production")'
 CMD gunicorn --bind 0.0.0.0:5000 application:application
