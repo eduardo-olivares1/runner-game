@@ -10,8 +10,9 @@ jobs:
       - name: Checkout Latest Repo
         uses: actions/checkout@master
         
-      - name: Generate Deployment Package 
-        run: zip -r deploy-production.zip flask-app
+      - name: Generate Deployment Package
+        working-directory: ./flask-app 
+        run: zip -r deploy-production.zip *
         
       - name: Get timestamp
         uses: gerred/actions/current-time@master
