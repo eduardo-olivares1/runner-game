@@ -17,13 +17,31 @@ let config = {
 };
 
 // Global Game Variables
+const collectiblesCount = 11;
+const start = Date.now();
+const maxTime = 30.00;
+
 let player;
 let collectibles;
 let platforms;
 let cursors;
 let scoreText;
 let amountCollected = 0;
-const collectiblesCount = 11;
+let timeElapsed = 0;
+let timeCompleted = 0;
+
+let gameTimer = setInterval(() => {
+    let delta = Date.now() - start;
+    let deltaToDisplay = (delta / 1000).toFixed(1);
+    timeElapsed = deltaToDisplay;
+
+    if (deltaToDisplay >= maxTime) {
+        clearInterval(gameTimer);
+    } else if (amountCollected >= collectiblesCount) {
+        clearInterval(gameTimer);
+    }
+
+}, 100);
 
 let game = new Phaser.Game(config);
 
@@ -89,6 +107,7 @@ function create() {
     this.physics.add.overlap(player, collectibles, collect, null, this);
 
     scoreText = this.add.text(16, 16, `Boba Collected: ${amountCollected} / ${collectiblesCount}`, { fontFamily: 'Silkscreen', fontSize: '32px', fill: '#000' });
+    timerText = this.add.text(550, 16, `Time:`, { fontFamily: 'Silkscreen', fontSize: '32px', fill: '#000' });
 }
 
 function update() {
@@ -111,10 +130,17 @@ function update() {
     if (cursors.up.isDown && player.body.touching.down) {
         player.setVelocityY(-515);
     }
+
+    if (timeElapsed >= maxTime) {
+        timerText.setText(`Time: MAX`)
+    } else {
+        timerText.setText(`Time: ${timeElapsed}`)
+    }
+
 }
 
 function collect(player, collectible) {
     collectible.disableBody(true, true);
-    amountCollected += 1
-    scoreText.setText(`Boba Collected: ${amountCollected} / ${collectiblesCount}`)
+    amountCollected += 1;
+    scoreText.setText(`Boba Collected: ${amountCollected} / ${collectiblesCount}`);
 }
