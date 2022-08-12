@@ -32,15 +32,7 @@ let timeCompleted = 0;
 
 let gameTimer = setInterval(() => {
     let delta = Date.now() - start;
-    let deltaToDisplay = (delta / 1000).toFixed(1);
-    timeElapsed = deltaToDisplay;
-
-    if (deltaToDisplay >= maxTime) {
-        clearInterval(gameTimer);
-    } else if (amountCollected >= maxCollectibles) {
-        clearInterval(gameTimer);
-    }
-
+    timeElapsed = (delta / 1000).toFixed(1);
 }, 100);
 
 let game = new Phaser.Game(config);
@@ -127,10 +119,17 @@ function update() {
     }
 
     if (timeElapsed >= maxTime) {
-        timerText.setText(`Time: MAX`)
+        clearInterval(gameTimer);
+        timerText.setText(`Time: MAX`);
+        timerText.setColor('red');
+    } else if (timeCompleted > 0) {
+        timerText.setText(`Time: ${timeCompleted}`);
+        timerText.setColor('green');
     } else {
-        timerText.setText(`Time: ${timeElapsed}`)
+        timerText.setText(`Time: ${timeElapsed}`);
     }
+
+
 
 }
 
@@ -138,4 +137,9 @@ function collect(player, collectible) {
     collectible.disableBody(true, true);
     amountCollected += 1;
     scoreText.setText(`Boba Collected: ${amountCollected} / ${maxCollectibles}`);
+
+    if (amountCollected >= maxCollectibles) {
+        timeCompleted = timeElapsed;
+        clearInterval(gameTimer);
+    }
 }
