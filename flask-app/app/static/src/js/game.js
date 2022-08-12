@@ -17,7 +17,7 @@ let config = {
 };
 
 // Global Game Variables
-const collectiblesCount = 11;
+const maxCollectibles = 11;
 const start = Date.now();
 const maxTime = 30.00;
 
@@ -32,15 +32,7 @@ let timeCompleted = 0;
 
 let gameTimer = setInterval(() => {
     let delta = Date.now() - start;
-    let deltaToDisplay = (delta / 1000).toFixed(1);
-    timeElapsed = deltaToDisplay;
-
-    if (deltaToDisplay >= maxTime) {
-        clearInterval(gameTimer);
-    } else if (amountCollected >= collectiblesCount) {
-        clearInterval(gameTimer);
-    }
-
+    timeElapsed = (delta / 1000).toFixed(1);
 }, 100);
 
 let game = new Phaser.Game(config);
@@ -92,38 +84,33 @@ function create() {
 
     collectibles = this.physics.add.group({
         key: 'collectible',
-        repeat: collectiblesCount - 1,
+        repeat: maxCollectibles - 1,
         setXY: { x: 12, y: 0, stepX: 70 }
     });
 
     collectibles.children.iterate(function (child) {
-
         child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-
     });
 
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(collectibles, platforms);
     this.physics.add.overlap(player, collectibles, collect, null, this);
 
-    scoreText = this.add.text(16, 16, `Boba Collected: ${amountCollected} / ${collectiblesCount}`, { fontFamily: 'Silkscreen', fontSize: '32px', fill: '#000' });
+    scoreText = this.add.text(16, 16, `Boba Collected: ${amountCollected} / ${maxCollectibles}`, { fontFamily: 'Silkscreen', fontSize: '32px', fill: '#000' });
     timerText = this.add.text(550, 16, `Time:`, { fontFamily: 'Silkscreen', fontSize: '32px', fill: '#000' });
 }
 
 function update() {
     if (cursors.left.isDown) {
         player.setVelocityX(-160);
-
         player.anims.play('left', true);
     }
     else if (cursors.right.isDown) {
         player.setVelocityX(160);
-
         player.anims.play('right', true);
     }
     else {
         player.setVelocityX(0);
-
         player.anims.play('turn');
     }
 
@@ -132,15 +119,27 @@ function update() {
     }
 
     if (timeElapsed >= maxTime) {
-        timerText.setText(`Time: MAX`)
+        clearInterval(gameTimer);
+        timerText.setText(`Time: MAX`);
+        timerText.setColor('red');
+    } else if (timeCompleted > 0) {
+        timerText.setText(`Time: ${timeCompleted}`);
+        timerText.setColor('green');
     } else {
-        timerText.setText(`Time: ${timeElapsed}`)
+        timerText.setText(`Time: ${timeElapsed}`);
     }
+
+
 
 }
 
 function collect(player, collectible) {
     collectible.disableBody(true, true);
     amountCollected += 1;
-    scoreText.setText(`Boba Collected: ${amountCollected} / ${collectiblesCount}`);
+    scoreText.setText(`Boba Collected: ${amountCollected} / ${maxCollectibles}`);
+
+    if (amountCollected >= maxCollectibles) {
+        timeCompleted = timeElapsed;
+        clearInterval(gameTimer);
+    }
 }
