@@ -17,7 +17,7 @@ let config = {
 };
 
 // Global Game Variables
-const collectiblesCount = 11;
+const maxCollectibles = 11;
 const start = Date.now();
 const maxTime = 30.00;
 
@@ -37,7 +37,7 @@ let gameTimer = setInterval(() => {
 
     if (deltaToDisplay >= maxTime) {
         clearInterval(gameTimer);
-    } else if (amountCollected >= collectiblesCount) {
+    } else if (amountCollected >= maxCollectibles) {
         clearInterval(gameTimer);
     }
 
@@ -92,7 +92,7 @@ function create() {
 
     collectibles = this.physics.add.group({
         key: 'collectible',
-        repeat: collectiblesCount - 1,
+        repeat: maxCollectibles - 1,
         setXY: { x: 12, y: 0, stepX: 70 }
     });
 
@@ -106,7 +106,7 @@ function create() {
     this.physics.add.collider(collectibles, platforms);
     this.physics.add.overlap(player, collectibles, collect, null, this);
 
-    scoreText = this.add.text(16, 16, `Boba Collected: ${amountCollected} / ${collectiblesCount}`, { fontFamily: 'Silkscreen', fontSize: '32px', fill: '#000' });
+    scoreText = this.add.text(16, 16, `Boba Collected: ${amountCollected} / ${maxCollectibles}`, { fontFamily: 'Silkscreen', fontSize: '32px', fill: '#000' });
     timerText = this.add.text(550, 16, `Time:`, { fontFamily: 'Silkscreen', fontSize: '32px', fill: '#000' });
 }
 
@@ -142,5 +142,5 @@ function update() {
 function collect(player, collectible) {
     collectible.disableBody(true, true);
     amountCollected += 1;
-    scoreText.setText(`Boba Collected: ${amountCollected} / ${collectiblesCount}`);
+    scoreText.setText(`Boba Collected: ${amountCollected} / ${maxCollectibles}`);
 }
