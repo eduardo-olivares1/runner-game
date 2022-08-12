@@ -97,9 +97,7 @@ function create() {
     });
 
     collectibles.children.iterate(function (child) {
-
         child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-
     });
 
     this.physics.add.collider(player, platforms);
@@ -113,17 +111,14 @@ function create() {
 function update() {
     if (cursors.left.isDown) {
         player.setVelocityX(-160);
-
         player.anims.play('left', true);
     }
     else if (cursors.right.isDown) {
         player.setVelocityX(160);
-
         player.anims.play('right', true);
     }
     else {
         player.setVelocityX(0);
-
         player.anims.play('turn');
     }
 
