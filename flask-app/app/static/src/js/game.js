@@ -25,6 +25,7 @@ let player;
 let collectibles;
 let platforms;
 let cursors;
+let wasd_keys;
 let scoreText;
 let amountCollected = 0;
 let timeElapsed = 0;
@@ -81,6 +82,7 @@ function create() {
     });
 
     cursors = this.input.keyboard.createCursorKeys();
+    wasd_keys = this.input.keyboard.addKeys({ W: 'W', A: 'A', S: 'S', D: 'D' });
 
     collectibles = this.physics.add.group({
         key: 'collectible',
@@ -101,11 +103,11 @@ function create() {
 }
 
 function update() {
-    if (cursors.left.isDown) {
+    if (cursors.left.isDown || wasd_keys.A.isDown) {
         player.setVelocityX(-160);
         player.anims.play('left', true);
     }
-    else if (cursors.right.isDown) {
+    else if (cursors.right.isDown || wasd_keys.D.isDown) {
         player.setVelocityX(160);
         player.anims.play('right', true);
     }
@@ -114,7 +116,7 @@ function update() {
         player.anims.play('turn');
     }
 
-    if (cursors.up.isDown && player.body.touching.down) {
+    if (cursors.up.isDown && player.body.touching.down || wasd_keys.W.isDown && player.body.touching.down) {
         player.setVelocityY(-515);
     }
 
