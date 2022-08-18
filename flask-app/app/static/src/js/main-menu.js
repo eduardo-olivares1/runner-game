@@ -6,7 +6,7 @@ class MainMenu {
 
         this.tweens.add({ targets: nameLabel, y: 80, duration: 1000, ease: 'bounce.out' })
 
-        let startText = 'press the Enter key to start';
+        let startText = 'press <<Enter>> to start';
         let startLabel = this.add.text(400, 300, startText, { font: '25px Silkscreen', fill: 'black' });
         startLabel.setOrigin(0.5, 0.5);
 
