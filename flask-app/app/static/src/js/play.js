@@ -17,13 +17,7 @@ class Play {
         }, 100);
         this.maxTime = 30.00;
 
-        this.add.image(400, 300, 'background');
-
-        this.platforms = this.physics.add.staticGroup();
-        this.platforms.create(400, 568, 'ground').setScale(2).refreshBody();
-        this.platforms.create(600, 400, 'ground');
-        this.platforms.create(50, 250, 'ground');
-        this.platforms.create(650, 220, 'ground');
+        this.generateWorld();
 
         this.player = this.physics.add.sprite(100, 450, 'player');
         this.player.setBounce(0.2);
@@ -109,6 +103,15 @@ class Play {
             this.timeElapsed = this.timeElapsed;
             clearInterval(this.gameTimer);
         }
+    }
+
+    generateWorld() {
+        this.add.image(400, 300, 'background');
+        this.platforms = this.physics.add.staticGroup();
+        this.platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+        this.platforms.create(600, 400, 'ground');
+        this.platforms.create(50, 250, 'ground');
+        this.platforms.create(650, 220, 'ground');
     }
 
 
