@@ -1,29 +1,18 @@
 class Play {
     create() {
-        this.player = this.physics.add.sprite(100, 450, 'player');
-        this.collectibles = this.physics.add.group({
-            key: 'collectible',
-            repeat: this.maxCollectibles - 1,
-            setXY: { x: 12, y: 0, stepX: 70 }
-        });
-
-        this.cursors = this.input.keyboard.createCursorKeys();
-        this.wasd_keys = this.input.keyboard.addKeys({ W: 'W', A: 'A', S: 'S', D: 'D' });
+        this.generateWorld();
 
         this.amountCollected = 0;
         this.timeElapsed = 0;
         this.timeCompleted = 0;
         this.maxCollectibles = 11;
-
         let start = Date.now();
         this.gameTimer = setInterval(() => {
             let delta = Date.now() - start;
             this.timeElapsed = (delta / 1000).toFixed(1);
         }, 100);
         this.maxTime = 30.00;
-
-        this.generateWorld();
-
+        this.player = this.physics.add.sprite(100, 450, 'player');
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
 
@@ -45,6 +34,15 @@ class Play {
             frames: this.anims.generateFrameNumbers('player', { start: 2, end: 3 }),
             frameRate: 10,
             repeat: -1
+        });
+
+        this.cursors = this.input.keyboard.createCursorKeys();
+        this.wasd_keys = this.input.keyboard.addKeys({ W: 'W', A: 'A', S: 'S', D: 'D' });
+
+        this.collectibles = this.physics.add.group({
+            key: 'collectible',
+            repeat: this.maxCollectibles - 1,
+            setXY: { x: 12, y: 0, stepX: 70 }
         });
 
         this.collectibles.children.iterate(function (child) {
