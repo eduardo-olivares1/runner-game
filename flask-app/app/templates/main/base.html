@@ -15,6 +15,10 @@
         });
       </script>
     <script src="{{ url_for('static', filename='vendor/phaser.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='src/js/load.js')}}"></script>
+    <script src="{{ url_for('static', filename='src/js/main-menu.js')}}"></script>
+    <script src="{{ url_for('static', filename='src/js/play.js')}}"></script>
+    <script src="{{ url_for('static', filename='src/js/game.js')}}"></script>
 </head>
 
 <body>
@@ -22,8 +26,7 @@
         {% block main_content %}
         {% endblock %}
     </main>
-    <script src="{{ url_for('static', filename='src/js/play.js')}}"></script>
-    <script src="{{ url_for('static', filename='src/js/game.js')}}"></script>
+
 </body>
 
 </html>

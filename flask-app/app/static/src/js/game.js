@@ -13,5 +13,8 @@ let config = {
 
 let game = new Phaser.Game(config);
 
-game.scene.add('main', Main);
-game.scene.start('main')
+game.scene.add('load', Load);
+game.scene.add('main-menu', MainMenu);
+game.scene.add('play', Play);
+
+game.scene.start('load');

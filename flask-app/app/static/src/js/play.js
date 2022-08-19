@@ -1,22 +1,7 @@
-class Main {
-
-    preload() {
-        this.load.setBaseURL(window.location.origin);
-        this.load.image('background', './static/assets/sky.png');
-        this.load.image('ground', './static/assets/platform.png');
-        this.load.image('collectible', './static/assets/boba_pearl.png');
-        this.load.spritesheet('player', './static/assets/woof.png',
-            { frameWidth: 32, frameHeight: 32 }
-        );
-    }
-
+class Play {
     create() {
-        this.player = null;
-        this.collectibles = null;
-        this.platforms = null;
-        this.cursors = null;
-        this.wasd_keys = null;
-        this.scoreText = null;
+        this.generateWorld();
+
         this.amountCollected = 0;
         this.timeElapsed = 0;
         this.timeCompleted = 0;
@@ -27,15 +12,6 @@ class Main {
             this.timeElapsed = (delta / 1000).toFixed(1);
         }, 100);
         this.maxTime = 30.00;
-
-        this.add.image(400, 300, 'background');
-
-        this.platforms = this.physics.add.staticGroup();
-        this.platforms.create(400, 568, 'ground').setScale(2).refreshBody();
-        this.platforms.create(600, 400, 'ground');
-        this.platforms.create(50, 250, 'ground');
-        this.platforms.create(650, 220, 'ground');
-
         this.player = this.physics.add.sprite(100, 450, 'player');
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
@@ -120,6 +96,15 @@ class Main {
             this.timeElapsed = this.timeElapsed;
             clearInterval(this.gameTimer);
         }
+    }
+
+    generateWorld() {
+        this.add.image(400, 300, 'background');
+        this.platforms = this.physics.add.staticGroup();
+        this.platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+        this.platforms.create(600, 400, 'ground');
+        this.platforms.create(50, 250, 'ground');
+        this.platforms.create(650, 220, 'ground');
     }
 
 
