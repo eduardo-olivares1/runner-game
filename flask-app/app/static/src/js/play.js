@@ -15,6 +15,17 @@ class Play {
         this.player = this.physics.add.sprite(100, 450, 'player');
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
+        
+        this.colletibleParticles = this.add.particles('black-pixel');
+        this.collectibleEmitter = this.colletibleParticles.createEmitter({
+            quantity: 5,
+            gravityY: 800,
+            bounce: 1,
+            speed: { min: -150, max: 150 },
+            scale: { start: 4, end: 0.1 },
+            lifespan: 500,
+            on: false
+        });
 
         this.anims.create({
             key: 'left',
@@ -89,6 +100,8 @@ class Play {
 
     collect(player, collectible) {
         collectible.disableBody(true, true);
+        this.collectibleEmitter.setPosition(collectible.x, collectible.y);
+        this.collectibleEmitter.explode();
         this.amountCollected += 1;
         this.scoreText.setText(`Boba Collected: ${this.amountCollected} / ${this.maxCollectibles}`);
 

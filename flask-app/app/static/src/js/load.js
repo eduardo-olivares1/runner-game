@@ -5,6 +5,7 @@ class Load {
         this.load.image('background', './static/assets/sky.png');
         this.load.image('ground', './static/assets/platform.png');
         this.load.image('collectible', './static/assets/boba_pearl.png');
+        this.load.image('black-pixel', './static/assets/black-pixel.png');
         this.load.spritesheet('player', './static/assets/woof.png',
             { frameWidth: 32, frameHeight: 32 }
         );
