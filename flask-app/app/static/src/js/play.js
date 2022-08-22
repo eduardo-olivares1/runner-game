@@ -1,21 +1,15 @@
 class Play {
     create() {
         this.generateWorld();
-
         this.amountCollected = 0;
-        this.timeElapsed = 0;
-        this.timeCompleted = 0;
         this.maxCollectibles = 11;
-        let start = Date.now();
-        this.gameTimer = setInterval(() => {
-            let delta = Date.now() - start;
-            this.timeElapsed = (delta / 1000).toFixed(1);
-        }, 100);
         this.maxTime = 30.00;
         this.player = this.physics.add.sprite(100, 450, 'player');
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
-        
+        this.timeCompleted = null;
+        this.timer = this.time.addEvent({ delay: 30000, loop: false});
+
         this.colletibleParticles = this.add.particles('black-pixel');
         this.collectibleEmitter = this.colletibleParticles.createEmitter({
             quantity: 5,
@@ -49,6 +43,7 @@ class Play {
 
         this.cursors = this.input.keyboard.createCursorKeys();
         this.wasd_keys = this.input.keyboard.addKeys({ W: 'W', A: 'A', S: 'S', D: 'D' });
+        this.rKey = this.input.keyboard.addKey('r');
 
         this.collectibles = this.physics.add.group({
             key: 'collectible',
@@ -69,6 +64,10 @@ class Play {
     }
 
     update() {
+        if (this.rKey.isDown) {
+            this.scene.start('play');
+        }
+
         if (this.cursors.left.isDown || this.wasd_keys.A.isDown) {
             this.player.setVelocityX(-160);
             this.player.anims.play('left', true);
@@ -86,16 +85,18 @@ class Play {
             this.player.setVelocityY(-515);
         }
 
-        if (this.timeElapsed >= this.maxTime) {
-            clearInterval(this.gameTimer);
+        this.elapsedTime = this.timer.getElapsedSeconds().toFixed(1);
+
+        if (this.elapsedTime >= this.maxTime) {
             this.timerText.setText(`Time: MAX`);
             this.timerText.setColor('red');
-        } else if (this.timeElapsed > 0) {
-            this.timerText.setText(`Time: ${this.timeElapsed}`);
+        } else if (this.timeCompleted != null) {
+            this.timerText.setText(`Time: ${this.timeCompleted}`);
             this.timerText.setColor('green');
         } else {
-            this.timerText.setText(`Time: ${this.timeElapsed}`);
+            this.timerText.setText(`Time: ${this.elapsedTime}`);
         }
+
     }
 
     collect(player, collectible) {
@@ -106,8 +107,8 @@ class Play {
         this.scoreText.setText(`Boba Collected: ${this.amountCollected} / ${this.maxCollectibles}`);
 
         if (this.amountCollected >= this.maxCollectibles) {
-            this.timeElapsed = this.timeElapsed;
-            clearInterval(this.gameTimer);
+            this.timeCompleted = this.elapsedTime;
+            console.log(this.timeCompleted);
         }
     }
 
@@ -119,6 +120,5 @@ class Play {
         this.platforms.create(50, 250, 'ground');
         this.platforms.create(650, 220, 'ground');
     }
-
 
 }
