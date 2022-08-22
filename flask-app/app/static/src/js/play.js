@@ -86,7 +86,7 @@ class Play {
         if (this.cursors.up.isDown && this.player.body.touching.down || this.wasd_keys.W.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-515);
         }
-        
+
         if (this.elapsedTime >= this.maxTime) {
             this.timerText.setText(`Time: MAX`);
             this.timerText.setColor('red');
@@ -108,7 +108,6 @@ class Play {
 
         if (this.amountCollected >= this.maxCollectibles) {
             this.timeCompleted = this.elapsedTime;
-            console.log(this.timeCompleted);
         }
     }
 
