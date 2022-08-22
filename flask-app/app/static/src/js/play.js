@@ -8,7 +8,7 @@ class Play {
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
         this.timeCompleted = null;
-        this.timer = this.time.addEvent({ delay: 30000, loop: false});
+        this.timer = this.time.addEvent({ delay: 30000, loop: false });
 
         this.colletibleParticles = this.add.particles('black-pixel');
         this.collectibleEmitter = this.colletibleParticles.createEmitter({
@@ -87,12 +87,12 @@ class Play {
             this.player.setVelocityY(-515);
         }
 
-        if (this.elapsedTime >= this.maxTime) {
-            this.timerText.setText(`Time: MAX`);
-            this.timerText.setColor('red');
-        } else if (this.timeCompleted != null) {
+        if (this.timeCompleted != null) {
             this.timerText.setText(`Time: ${this.timeCompleted}`);
             this.timerText.setColor('green');
+        } else if (this.elapsedTime >= this.maxTime) {
+            this.timerText.setText(`Time: MAX`);
+            this.timerText.setColor('red');
         } else {
             this.timerText.setText(`Time: ${this.elapsedTime}`);
         }
