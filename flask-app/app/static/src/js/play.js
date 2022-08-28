@@ -10,6 +10,10 @@ class Play {
         this.timeCompleted = null;
         this.timer = this.time.addEvent({ delay: 30000, loop: false });
 
+        this.jumpSound = this.sound.add('jump', {volume: 2.75});
+        this.consumeSound = this.sound.add('consume');
+        this.backgroundMusic = this.sound.add('background-music', {volume: 0.15});
+
         this.colletibleParticles = this.add.particles('black-pixel');
         this.collectibleEmitter = this.colletibleParticles.createEmitter({
             quantity: 5,
@@ -61,12 +65,17 @@ class Play {
 
         this.scoreText = this.add.text(16, 16, `Boba Collected: ${this.amountCollected} / ${this.maxCollectibles}`, { fontFamily: 'Silkscreen', fontSize: '32px', fill: '#000' });
         this.timerText = this.add.text(550, 16, `Time:`, { fontFamily: 'Silkscreen', fontSize: '32px', fill: '#000' });
+
+        this.backgroundMusic.play();
+        this.backgroundMusic.loop = true;
     }
 
     update() {
         this.elapsedTime = this.timer.getElapsedSeconds().toFixed(1);
+        
 
         if (this.rKey.isDown) {
+            this.backgroundMusic.stop();
             this.scene.start('play');
         }
 
@@ -85,6 +94,7 @@ class Play {
 
         if (this.cursors.up.isDown && this.player.body.touching.down || this.wasd_keys.W.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-515);
+            this.jumpSound.play();
         }
 
         if (this.timeCompleted != null) {
@@ -101,6 +111,7 @@ class Play {
 
     collect(player, collectible) {
         collectible.disableBody(true, true);
+        this.consumeSound.play();
         this.collectibleEmitter.setPosition(collectible.x, collectible.y);
         this.collectibleEmitter.explode();
         this.amountCollected += 1;

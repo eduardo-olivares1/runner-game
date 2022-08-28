@@ -1,6 +1,9 @@
 class Load {
     preload() {
         this.load.setBaseURL(window.location.origin);
+        this.load.audio('jump',['./static/assets/jump.mp3']);
+        this.load.audio('consume',['./static/assets/sandra_nom_clean.mp3']);
+        this.load.audio('background-music',['./static/assets/teazone.mp3']);
         this.load.image('main-menu-background', './static/assets/background.png');
         this.load.image('background', './static/assets/sky.png');
         this.load.image('ground', './static/assets/platform.png');
