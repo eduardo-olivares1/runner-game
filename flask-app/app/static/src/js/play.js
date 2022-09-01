@@ -5,10 +5,12 @@ class Play {
         this.maxCollectibles = 11;
         this.maxTime = 30.00;
         this.player = this.physics.add.sprite(100, 450, 'player');
+        this.player.setScale(0.75);
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
         this.timeCompleted = null;
         this.timer = this.time.addEvent({ delay: 30000, loop: false });
+        this.idle = 'right-idle';
 
         this.jumpSound = this.sound.add('jump', { volume: 2.75 });
         this.consumeSound = this.sound.add('consume');
@@ -27,20 +29,27 @@ class Play {
 
         this.anims.create({
             key: 'left',
-            frames: this.anims.generateFrameNumbers('player', { start: 0, end: 1 }),
+            frames: this.anims.generateFrameNumbers('player', { start: 9, end: 0 }),
             frameRate: 10,
             repeat: -1
         });
 
         this.anims.create({
-            key: 'turn',
-            frames: [{ key: 'player', frame: 2 }],
+            key: 'left-idle',
+            frames: [{ key: 'player', frame: 10 }],
+            frameRate: 20
+        });
+
+
+        this.anims.create({
+            key: 'right-idle',
+            frames: [{ key: 'player', frame: 11 }],
             frameRate: 20
         });
 
         this.anims.create({
             key: 'right',
-            frames: this.anims.generateFrameNumbers('player', { start: 2, end: 3 }),
+            frames: this.anims.generateFrameNumbers('player', { start: 12, end: 21 }),
             frameRate: 10,
             repeat: -1
         });
@@ -82,14 +91,17 @@ class Play {
         if (this.cursors.left.isDown || this.wasd_keys.A.isDown) {
             this.player.setVelocityX(-160);
             this.player.anims.play('left', true);
+            this.idle = 'left-idle';
         }
         else if (this.cursors.right.isDown || this.wasd_keys.D.isDown) {
             this.player.setVelocityX(160);
             this.player.anims.play('right', true);
+            this.idle = 'right-idle';
         }
         else {
             this.player.setVelocityX(0);
-            this.player.anims.play('turn');
+            this.player.anims.play(this.idle);
+            this.player.anims.play('right-idle');
         }
 
         if (this.cursors.up.isDown && this.player.body.touching.down || this.wasd_keys.W.isDown && this.player.body.touching.down) {
