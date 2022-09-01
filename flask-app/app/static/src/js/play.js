@@ -10,9 +10,9 @@ class Play {
         this.timeCompleted = null;
         this.timer = this.time.addEvent({ delay: 30000, loop: false });
 
-        this.jumpSound = this.sound.add('jump', {volume: 2.75});
+        this.jumpSound = this.sound.add('jump', { volume: 2.75 });
         this.consumeSound = this.sound.add('consume');
-        this.backgroundMusic = this.sound.add('background-music', {volume: 0.15});
+        this.backgroundMusic = this.sound.add('background-music', { volume: 0.15 });
 
         this.colletibleParticles = this.add.particles('black-pixel');
         this.collectibleEmitter = this.colletibleParticles.createEmitter({
@@ -72,7 +72,7 @@ class Play {
 
     update() {
         this.elapsedTime = this.timer.getElapsedSeconds().toFixed(1);
-        
+
 
         if (this.rKey.isDown) {
             this.backgroundMusic.stop();
@@ -127,8 +127,8 @@ class Play {
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(400, 568, 'ground').setScale(2).refreshBody();
         this.platforms.create(600, 400, 'ground');
-        this.platforms.create(50, 250, 'ground');
-        this.platforms.create(650, 220, 'ground');
+        this.platforms.create(50, 249, 'ground');
+        this.platforms.create(650, 219, 'ground');
     }
 
 }
