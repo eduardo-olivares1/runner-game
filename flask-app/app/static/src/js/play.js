@@ -101,7 +101,6 @@ class Play {
         else {
             this.player.setVelocityX(0);
             this.player.anims.play(this.idle);
-            this.player.anims.play('right-idle');
         }
 
         if (this.cursors.up.isDown && this.player.body.touching.down || this.wasd_keys.W.isDown && this.player.body.touching.down) {
