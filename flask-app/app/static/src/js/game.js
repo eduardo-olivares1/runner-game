@@ -3,6 +3,18 @@ let config = {
     width: 800,
     height: 600,
     parent: 'phaser-game',
+    scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        min: {
+            width: 400,
+            height: 300,
+        },
+        max: {
+            width: 2000,
+            height: 1500,
+        }
+    },
     physics: {
         default: 'arcade',
         arcade: {

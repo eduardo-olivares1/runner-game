@@ -2,30 +2,31 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Game | {% block title %} {% endblock %}</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
-    <script>
-        WebFont.load({
-          google: {
-            families: ['Silkscreen']
-          }
-        });
-      </script>
-    <script src="{{ url_for('static', filename='vendor/phaser.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='src/js/load.js')}}"></script>
-    <script src="{{ url_for('static', filename='src/js/main-menu.js')}}"></script>
-    <script src="{{ url_for('static', filename='src/js/play.js')}}"></script>
-    <script src="{{ url_for('static', filename='src/js/game.js')}}"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Game | {% block title %} {% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='src/css/main.css')}}">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: {
+        families: ['Silkscreen']
+      }
+    });
+  </script>
+  <script src="{{ url_for('static', filename='vendor/phaser.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='src/js/load.js')}}"></script>
+  <script src="{{ url_for('static', filename='src/js/main-menu.js')}}"></script>
+  <script src="{{ url_for('static', filename='src/js/play.js')}}"></script>
+  <script src="{{ url_for('static', filename='src/js/game.js')}}"></script>
 </head>
 
 <body>
-    <main>
-        {% block main_content %}
-        {% endblock %}
-    </main>
+  <main>
+    {% block main_content %}
+    {% endblock %}
+  </main>
 
 </body>
 
