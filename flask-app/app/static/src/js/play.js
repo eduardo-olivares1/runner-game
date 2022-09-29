@@ -111,6 +111,9 @@ class Play {
         if (this.timeCompleted != null) {
             this.timerText.setText(`Time: ${this.timeCompleted}`);
             this.timerText.setColor('green');
+            // Pass score to another scene
+            this.backgroundMusic.stop();
+            this.scene.start('main-menu', { timeCompleted: this.timeCompleted })
         } else if (this.elapsedTime >= this.maxTime) {
             this.timerText.setText(`Time: MAX`);
             this.timerText.setColor('red');
