@@ -17,6 +17,7 @@ class Play {
         this.consumeSound = this.sound.add('consume');
         this.backgroundMusic = this.sound.add('background-music', { volume: 0.15 });
         this.playerDeathSound = this.sound.add('player-death-sound', { volume: 0.75 });
+        this.winSound = this.sound.add('win', { volume: 0.75 });
 
         this.colletibleParticles = this.add.particles('black-pixel');
         this.collectibleEmitter = this.colletibleParticles.createEmitter({
@@ -119,6 +120,7 @@ class Play {
             this.timerText.setColor('green');
             // Pass score to another scene
             this.backgroundMusic.stop();
+            this.winSound.play();
             this.scene.start('main-menu', { timeCompleted: this.timeCompleted });
         } else if (this.elapsedTime >= this.maxTime) {
             this.timerText.setText(`Time: MAX`);
