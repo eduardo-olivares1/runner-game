@@ -12,9 +12,12 @@ class Play {
         this.timer = this.time.addEvent({ delay: 30000, loop: false });
         this.idle = 'right-idle';
 
+        // Sounds
         this.jumpSound = this.sound.add('jump', { volume: 2.75 });
         this.consumeSound = this.sound.add('consume');
         this.backgroundMusic = this.sound.add('background-music', { volume: 0.15 });
+        this.playerDeathSound = this.sound.add('player-death-sound', { volume: 0.75 });
+        this.winSound = this.sound.add('win', { volume: 0.75 });
 
         this.colletibleParticles = this.add.particles('black-pixel');
         this.collectibleEmitter = this.colletibleParticles.createEmitter({
@@ -80,6 +83,10 @@ class Play {
     }
 
     update() {
+        if(!this.player.active){
+            return;
+        }
+
         this.elapsedTime = this.timer.getElapsedSeconds().toFixed(1);
 
 
@@ -113,10 +120,12 @@ class Play {
             this.timerText.setColor('green');
             // Pass score to another scene
             this.backgroundMusic.stop();
-            this.scene.start('main-menu', { timeCompleted: this.timeCompleted })
+            this.winSound.play();
+            this.scene.start('main-menu', { timeCompleted: this.timeCompleted });
         } else if (this.elapsedTime >= this.maxTime) {
             this.timerText.setText(`Time: MAX`);
             this.timerText.setColor('red');
+            this.killPlayer();
         } else {
             this.timerText.setText(`Time: ${this.elapsedTime}`);
         }
@@ -143,6 +152,16 @@ class Play {
         this.platforms.create(600, 400, 'ground');
         this.platforms.create(50, 249, 'ground');
         this.platforms.create(650, 219, 'ground');
+    }
+
+    killPlayer() {
+        this.playerDeathSound.play();
+        this.player.destroy();
+        this.cameras.main.shake(300, 0.02);
+        this.collectibleEmitter.setPosition(this.player.x, this.player.y);
+        this.collectibleEmitter.explode();
+        this.backgroundMusic.stop();
+        this.time.addEvent({ delay: 1000, callback: () => this.scene.start('main-menu', { timeCompleted: this.maxTime }) });
     }
 
 }
