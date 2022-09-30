@@ -1,3 +1,5 @@
+let documentHeight = document.documentElement.scrollHeight * .90;
+
 let config = {
     type: Phaser.AUTO,
     width: 800,
@@ -7,13 +9,9 @@ let config = {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
         min: {
-            width: 400,
-            height: 300,
+            width: documentHeight * 1.3333333,
+            height: documentHeight,
         },
-        max: {
-            width: 2000,
-            height: 1500,
-        }
     },
     physics: {
         default: 'arcade',
