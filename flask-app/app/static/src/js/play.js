@@ -75,8 +75,8 @@ class Play {
         this.physics.add.collider(this.collectibles, this.platforms);
         this.physics.add.overlap(this.player, this.collectibles, this.collect, null, this);
 
-        this.scoreText = this.add.text(16, 16, `Boba Collected: ${this.amountCollected} / ${this.maxCollectibles}`, { fontFamily: 'Silkscreen', fontSize: '32px', fill: '#000' });
-        this.timerText = this.add.text(550, 16, `Time:`, { fontFamily: 'Silkscreen', fontSize: '32px', fill: '#000' });
+        this.scoreText = this.add.text(535, 16, `Boba: ${this.amountCollected} / ${this.maxCollectibles}`, { fontFamily: 'Silkscreen', fontSize: '32px', fill: '#000' });
+        this.timerText = this.add.text(590, 45, `Time:`, { fontFamily: 'Silkscreen', fontSize: '32px', fill: '#000' });
 
         this.backgroundMusic.play();
         this.backgroundMusic.loop = true;
@@ -138,7 +138,7 @@ class Play {
         this.collectibleEmitter.setPosition(collectible.x, collectible.y);
         this.collectibleEmitter.explode();
         this.amountCollected += 1;
-        this.scoreText.setText(`Boba Collected: ${this.amountCollected} / ${this.maxCollectibles}`);
+        this.scoreText.setText(`Boba: ${this.amountCollected} / ${this.maxCollectibles}`);
 
         if (this.amountCollected >= this.maxCollectibles) {
             this.timeCompleted = this.elapsedTime;
