@@ -2,7 +2,7 @@ class Load {
     preload() {
         this.load.setBaseURL(window.location.origin);
         this.load.audio('jump',['./static/assets/jump.mp3']);
-        this.load.audio('consume',['./static/assets/sandra_nom_clean.mp3']);
+        this.load.audio('consume',['./static/assets/boba_pickup.mp3']);
         this.load.audio('background-music',['./static/assets/teazone.mp3']);
         this.load.audio('player-death-sound',['./static/assets/player_death.mp3']);
         this.load.audio('win',['./static/assets/win.mp3']);
