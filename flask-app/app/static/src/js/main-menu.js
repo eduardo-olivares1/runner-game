@@ -8,7 +8,7 @@ class MainMenu {
             localStorage.setItem('bestTime', 0);
         }
 
-        if (timeCompleted < 30) {
+        if (timeCompleted < localStorage.getItem('bestTime')) {
             localStorage.setItem('bestTime', timeCompleted);
         }
 
