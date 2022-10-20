@@ -3,12 +3,21 @@ class MainMenu {
         // Game score data passed from game scene
         let timeCompleted = data.timeCompleted ? data.timeCompleted : 0;
 
-        // Get best time and save best time from local storage
+        // If no best time set bestTime to 0
         if (localStorage.getItem('bestTime') == null) {
             localStorage.setItem('bestTime', 0);
         }
 
-        if (timeCompleted < localStorage.getItem('bestTime')) {
+        let lastBestTime = Number(localStorage.getItem('bestTime'));
+
+        // Set new best time
+        // First score logic: If best time is set to initial value
+        if (lastBestTime == 0 && timeCompleted > 0) {
+            console.log("triggered1");
+            localStorage.setItem('bestTime', timeCompleted);
+        } // Logic for scores after first score
+        else if (timeCompleted < lastBestTime) {
+            console.log("triggered2");
             localStorage.setItem('bestTime', timeCompleted);
         }
 
