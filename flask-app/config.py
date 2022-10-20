@@ -1,10 +1,11 @@
 import os
+import uuid
 
 basedir = os.path.abspath(os.path.dirname(__name__))
 
 
 class Config(object):
-    SECRET_KEY = os.environ.get("SECRET_KEY") or "4QYfmkGos5nFGMFcPQ9Mx3s701jlqJpd"
+    SECRET_KEY = os.environ.get("SECRET_KEY") or uuid.uuid4().hex
 
     @staticmethod
     def init_app(app):
